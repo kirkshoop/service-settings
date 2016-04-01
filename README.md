@@ -10,8 +10,6 @@ This can be used to take the settings from a web.config and translate them to cs
 
 To get your project online, if you don't need a backend server, you can deploy to Github pages.
 
-Note: if you cloned this repo directly, you will first need to [create a new repo](https://github.com/new). Since you're uploading an existing repo, don't add a README, license or .gitignore. Then follow the instructions to add your new repo as the remote. You will need to `git remote rm origin` beforehand.
-
 To deploy for the first time, we need to set up a `gh-pages` branch:
 
 ```bash
