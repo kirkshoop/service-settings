@@ -19,14 +19,19 @@ function view (model) {
   );
 }
 
+function toArray(list) {
+    if (!list) return [];
+    return Array.prototype.slice.call(list);
+}
+
 function parseXml(text) {
     var parser = new DOMParser(),
         doc = parser.parseFromString("<rootforparse>"+ text +"</rootforparse>", "text/xml");
-    return Array.prototype.slice.call(doc.getElementsByTagName("rootforparse")[0].childNodes)
+    return toArray(doc.getElementsByTagName("rootforparse")[0].childNodes)
         .map(child => ({
             tag: child.nodeName,
             value: child.nodeValue,
-            attributes: Array.prototype.slice.call(child.attributes)
+            attributes: toArray(child.attributes)
                 .map(attribute => ({
                     name: attribute.name, 
                     value: attribute.value
@@ -61,7 +66,7 @@ export default function App ({DOM}) {
                         .map(attribute => "name=\"" + attribute.value + "\"")
                         .join(' ') + 
                     " />")
-                .join(' '); 
+                .join('\n'); 
 
             model.cscfg = settings
                 .filter(setting => setting.tag === "add")
@@ -74,7 +79,7 @@ export default function App ({DOM}) {
                             .map(attribute => "value=\"" + attribute.value + "\""))
                         .join(' ') + 
                     " />")
-                .join(' '); 
+                .join('\n'); 
 
             model.deploymap = settings
                 .filter(setting => setting.tag === "add")
@@ -85,7 +90,7 @@ export default function App ({DOM}) {
                         .join('');
                     return "<Setting Name=\"" + tag + "\">$(" + update.prefix + tag.split('.').pop(-1) + ")</Setting>";
                 })
-                .join(' '); 
+                .join('\n'); 
 
             model.deploy = settings
                 .filter(setting => setting.tag === "add")
@@ -97,7 +102,7 @@ export default function App ({DOM}) {
                     let mapped = update.prefix + tag.split('.').pop(-1);
                     return "<Setting Name=\"" + mapped + "\"></Setting>";
                 })
-                .join(' '); 
+                .join('\n'); 
 
             model.deployvalues = settings
                 .filter(setting => setting.tag === "add")
@@ -113,7 +118,7 @@ export default function App ({DOM}) {
                     let mapped = update.prefix + tag.split('.').pop(-1);
                     return "<Setting Name=\"" + mapped + "\">" + value + "</Setting>";
                 })
-                .join(' '); 
+                .join('\n'); 
 
             return model;
         }, 
