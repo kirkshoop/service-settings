@@ -31,5 +31,5 @@ git add .
 git commit -m "Update bundle"
 git push origin gh-pages
 ```
-Then visit http://**username**.github.io/**repository**. Your site should be online within 5 minutes or so.
+Then visit [http://kirkshoop.github.io/service-settings](http://kirkshoop.github.io/service-settings). The changes should be online within 5 minutes or so.
 
