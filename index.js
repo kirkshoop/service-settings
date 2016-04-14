@@ -3,6 +3,8 @@ import {makeDOMDriver} from '@cycle/dom';
 import {restart, restartable} from 'cycle-restart';
 import isolate from '@cycle/isolate';
 
+require('./styles.css');
+
 var app = require('./src/app').default;
 
 const drivers = {
