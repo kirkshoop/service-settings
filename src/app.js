@@ -43,6 +43,10 @@ function view (model) {
         div('.form-group .todeployvalues', [
             label('.col-sm-2 .control-label', {"htmlFor": "config" }, "deploy settings w/values"), 
             div('.col-sm-10', textarea('.form-control .deployvalues', {id: "config", value: model.deployvalues}))
+        ]),
+        div('.form-group .toconfigts', [
+            label('.col-sm-2 .control-label', {"htmlFor": "config" }, "config.ts settings"), 
+            div('.col-sm-10', textarea('.form-control .configts', {id: "config", value: model.configts}))
         ])
       ])
     ])
@@ -156,6 +160,22 @@ export default function App ({DOM}) {
                 })
                 .join('\n'); 
 
+            model.configts = settings
+                .filter(setting => setting.tag === "add")
+                .map(setting => {
+                    let tag = setting.attributes
+                        .filter(attribute => attribute.name === "key")
+                        .map(attribute => attribute.value)
+                        .join('');
+                    let value = setting.attributes
+                        .filter(attribute => attribute.name === "value")
+                        .map(attribute => attribute.value)
+                        .join('');
+                    let mapped = tag.split('.').pop(-1);
+                    return mapped + ": UXConfiguration[\"" + tag + "\"],";
+                })
+                .join('\n'); 
+
             return model;
         }, 
         {
@@ -163,7 +183,8 @@ export default function App ({DOM}) {
             cscfg: "", 
             deploy: "",
             deploymap: "",
-            deployvalues: ""
+            deployvalues: "",
+            configts: ""
         });
 
   return {
